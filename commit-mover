@@ -1,7 +1,7 @@
 #!/bin/bash
 
-OLD=~/Desktop/testRepo1
-NEW=~/Desktop/testRepo2
+OLD=./testRepo1
+NEW=./testRepo2
 
 FROM=8202a143a36b186d7dc1e8b63aae56daa8eb0070
 TO=7962dcb4c6b420af7b2130fbadb5137312f655da
