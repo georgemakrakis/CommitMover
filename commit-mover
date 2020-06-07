@@ -2,11 +2,51 @@
 
 set -e
 
-OLD=/home/george/Desktop/CommitMover/testRepo1
-NEW=/home/george/Desktop/CommitMover/testRepo2
+is_valid() {
+    case $1 in
+      ( *[!0-9A-Fa-f]* | "" ) echo "1" ;;
+      ( * )                
+        case ${#1} in
+          ( 40 ) echo "0" ;;
+          ( * )  echo "1" ;;
+        esac
+    esac    
+}
 
-FROM=7ffa778399fc6ea18e17784478519ef21492305c
-TO=91b7c02334b1dd3eee183c4c561a3cde450413a5
+if ! [ $# -eq 4 ]; then
+    echo "Four arguments must be provided"
+    exit 1
+fi
+if ! [ -d "$1" ]; then
+    echo "Parameter 1 is not a directory"
+    exit 1
+fi
+if ! [ -d "$2" ]; then
+    echo "Parameter 2 is not a directory"
+    exit 1
+fi
+
+# is_valid $3
+
+VALID3=$(is_valid $3)
+VALID4=$(is_valid $4)
+# echo $VALID
+
+if [ $VALID3 -eq 1 ]; then
+    echo "Parameter 3 is not valid sha-1"
+    exit 1
+fi
+
+if [ $VALID4 -eq 1 ]; then
+    echo "Parameter 4 is not valid sha-1"
+    exit 1
+fi
+
+OLD=$1
+NEW=$2
+
+FROM=$3
+TO=$4
 
 # TESTING VARIABLES
 #TO=05e74c0ccfc4754734568e9960dad16150060a04
