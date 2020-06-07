@@ -1,10 +1,16 @@
 #!/bin/bash
 
-OLD=./testRepo1
-NEW=./testRepo2
+set -e
 
-FROM=8202a143a36b186d7dc1e8b63aae56daa8eb0070
-TO=7962dcb4c6b420af7b2130fbadb5137312f655da
+OLD=/home/george/Desktop/CommitMover/testRepo1
+NEW=/home/george/Desktop/CommitMover/testRepo2
+
+FROM=7ffa778399fc6ea18e17784478519ef21492305c
+TO=91b7c02334b1dd3eee183c4c561a3cde450413a5
+
+# TESTING VARIABLES
+#TO=05e74c0ccfc4754734568e9960dad16150060a04
+#FROM=7962dcb4c6b420af7b2130fbadb5137312f655da
 
 cd $OLD
 
@@ -12,12 +18,13 @@ pwd
 
 mapfile -t sha1 < <(git rev-list HEAD)
 
+#The indices are aquired in reverse order
 for i in "${!sha1[@]}"; do
    if [[ "${sha1[$i]}" = "$FROM" ]]; then
-       FROM_INDEX=$i;
+       TO_INDEX=$i;
    fi
    if [[ "${sha1[$i]}" = "$TO" ]]; then
-      TO_INDEX=$i;
+      FROM_INDEX=$i;
    fi
 
 done
